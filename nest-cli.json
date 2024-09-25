@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/todo-micro/src",
+  "compilerOptions": {
+    "deleteOutDir": true,
+    "webpack": true,
+    "tsConfigPath": "apps/todo-micro/tsconfig.app.json"
+  },
+  "monorepo": true,
+  "root": "apps/todo-micro",
+  "projects": {
+    "todo-micro": {
+      "type": "application",
+      "root": "apps/todo-micro",
+      "entryFile": "main",
+      "sourceRoot": "apps/todo-micro/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/todo-micro/tsconfig.app.json"
+      }
+    },
+    "todo": {
+      "type": "application",
+      "root": "apps/todo",
+      "entryFile": "main",
+      "sourceRoot": "apps/todo/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/todo/tsconfig.app.json"
+      }
+    },
+    "users": {
+      "type": "application",
+      "root": "apps/users",
+      "entryFile": "main",
+      "sourceRoot": "apps/users/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/users/tsconfig.app.json"
+      }
+    },
+    "gateway": {
+      "type": "application",
+      "root": "apps/gateway",
+      "entryFile": "main",
+      "sourceRoot": "apps/gateway/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/gateway/tsconfig.app.json"
+      }
+    }
+  }
+}
