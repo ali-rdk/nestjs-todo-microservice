@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { GatewayController } from './gateway.controller';
 import { GatewayService } from './gateway.service';
-import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 import { TodoModule } from './todo/todo.module';
 
 @Module({
-  imports: [UsersModule, TodoModule],
+  imports: [AuthModule, TodoModule],
   controllers: [GatewayController],
   providers: [GatewayService],
 })
