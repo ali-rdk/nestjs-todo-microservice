@@ -20,8 +20,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: any) {
-    console.log(payload);
-
     const foundUser = await firstValueFrom(
       this.userClient.send({ cmd: 'users-findById' }, payload.sub),
     );

@@ -32,7 +32,6 @@ export class AuthService {
     const foundUser = await firstValueFrom(
       this.userClient.send({ cmd: 'users-find' }, email),
     );
-    console.log(foundUser);
 
     const isMatch: boolean = await bcrypt.compare(password, foundUser.password);
     if (foundUser && isMatch) {
@@ -45,10 +44,7 @@ export class AuthService {
   }
 
   async login(user) {
-    console.log(user);
-
     const payload = { email: user.email, sub: user.userId };
-    console.log(payload);
 
     return {
       access_token: this.jwtService.sign(payload),
