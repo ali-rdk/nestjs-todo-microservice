@@ -8,6 +8,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Todo } from 'libs/schema/todo.schema';
 import { Model } from 'mongoose';
 import { CreateTodoDto } from './dto/create-todo,dto';
+import { ITodo } from 'libs/interfaces/todo.interface';
 
 @Injectable()
 export class TodoService {
@@ -41,6 +42,7 @@ export class TodoService {
     if (!todo) {
       return new NotFoundException();
     }
+
     return {
       todo,
       status: HttpStatus.FOUND,
@@ -78,7 +80,7 @@ export class TodoService {
     };
   }
 
-  async update(todoId: string, userId, payload) {
+  async update(todoId: string, userId, payload: ITodo) {
     const owned = await this.isOwned(todoId, userId);
     if (!owned) {
       return new NotFoundException();

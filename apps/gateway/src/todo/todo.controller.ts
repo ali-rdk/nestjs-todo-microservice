@@ -33,9 +33,9 @@ export class TodoController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string, @Request() req) {
+  findOne(@Param('id') todoId: string, @Request() req) {
     const userId = req.user.userId;
-    return this.todoService.findOne(id, userId);
+    return this.todoService.findOne(todoId, userId);
   }
 
   @Patch(':id')

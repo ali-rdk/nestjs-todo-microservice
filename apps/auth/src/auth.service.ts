@@ -2,6 +2,8 @@ import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ClientProxy } from '@nestjs/microservices';
 import * as bcrypt from 'bcrypt';
+import { USER_CONTRACTS } from 'libs/contracts/users.contracts';
+import { IUser } from 'libs/interfaces/user.interface';
 import { firstValueFrom } from 'rxjs';
 
 @Injectable()
@@ -10,15 +12,15 @@ export class AuthService {
     @Inject('USER_SERVICE') private userClient: ClientProxy,
     private jwtService: JwtService,
   ) {}
-  async register(data) {
+  async register(data: IUser) {
     try {
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(data.password, salt);
       const newUser = this.userClient.send(
-        { cmd: 'users-create' },
+        { cmd: USER_CONTRACTS.CREATE },
         { email: data.email, password: hashedPassword },
       );
-      return newUser;
+      return { message: 'user created', status: HttpStatus.CREATED };
     } catch (error) {
       console.log(error);
       return new HttpException(
@@ -30,21 +32,21 @@ export class AuthService {
 
   async validateUser(email: string, password: string) {
     const foundUser = await firstValueFrom(
-      this.userClient.send({ cmd: 'users-find' }, email),
+      this.userClient.send({ cmd: USER_CONTRACTS.FIND_ONE }, email),
     );
 
     const isMatch: boolean = await bcrypt.compare(password, foundUser.password);
     if (foundUser && isMatch) {
       return {
-        userId: foundUser._id,
+        id: foundUser._id,
         email: foundUser.email,
       };
     }
     return isMatch;
   }
 
-  async login(user) {
-    const payload = { email: user.email, sub: user.userId };
+  async login(user: IUser) {
+    const payload = { email: user.email, sub: user.id };
 
     return {
       access_token: this.jwtService.sign(payload),

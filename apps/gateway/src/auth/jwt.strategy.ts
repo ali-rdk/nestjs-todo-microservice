@@ -4,6 +4,8 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { ConfigService } from '@nestjs/config';
 import { ClientProxy } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
+import { USER_CONTRACTS } from 'libs/contracts/users.contracts';
+import { IToken } from 'libs/interfaces/token.interface';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -19,9 +21,13 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: any) {
+  async validate(payload: IToken) {
+    if (!payload.sub) {
+      return new UnauthorizedException('Invalid Token');
+    }
+
     const foundUser = await firstValueFrom(
-      this.userClient.send({ cmd: 'users-findById' }, payload.sub),
+      this.userClient.send({ cmd: USER_CONTRACTS.FIND_BY_ID }, payload.sub),
     );
 
     if (!foundUser && foundUser.email !== payload.email) {
