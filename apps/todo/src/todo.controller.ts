@@ -1,7 +1,7 @@
 import { Controller, ValidationPipe } from '@nestjs/common';
 import { TodoService } from './todo.service';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { CreateTodoDto } from './dto/create-todo,dto';
+import { CreateTodoDto } from './dto/create-todo.dto';
 import { TODO_CONTRACTS } from 'libs/contracts/todo.contracts';
 import { UpdateTodoDto } from './dto/update-todo.dto';
 

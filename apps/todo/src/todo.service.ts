@@ -7,7 +7,7 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import { Todo } from 'libs/schema/todo.schema';
 import { Model } from 'mongoose';
-import { CreateTodoDto } from './dto/create-todo,dto';
+import { CreateTodoDto } from './dto/create-todo.dto';
 import { ITodo } from 'libs/interfaces/todo.interface';
 
 @Injectable()
