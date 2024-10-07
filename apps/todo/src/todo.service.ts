@@ -5,7 +5,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Todo } from 'libs/schema/todo.schema';
+import { Todo } from '../../../libs/schema/todo.schema';
 import { Model } from 'mongoose';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { ITodo } from 'libs/interfaces/todo.interface';
@@ -55,6 +55,8 @@ export class TodoService {
     if (!todos) {
       return new NotFoundException();
     }
+
+    console.log(todos);
 
     return {
       todos,

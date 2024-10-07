@@ -3,7 +3,7 @@ import { AuthService } from './auth.service';
 import { MessagePattern } from '@nestjs/microservices';
 import { RegisterDto } from './dto/register.dto';
 import { logInDto } from './dto/login.dto';
-import { AUTH_CONTRACTS } from 'libs/contracts/auth.contracts';
+import { AUTH_CONTRACTS } from '../../../libs/contracts/auth.contracts';
 
 @Controller()
 export class AuthController {
