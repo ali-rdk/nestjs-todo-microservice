@@ -1,6 +1,6 @@
 import { IsOptional, IsString, ValidateNested } from 'class-validator';
-import { CreateTodoDto } from './create-todo.dto';
 import { Type } from 'class-transformer';
+import { UpdateTodoPayloadDto } from './update-todo-payload.dto';
 
 export class UpdateTodoDto {
   @IsString()
@@ -11,6 +11,6 @@ export class UpdateTodoDto {
 
   @IsOptional()
   @ValidateNested()
-  @Type(() => CreateTodoDto)
-  payload: CreateTodoDto;
+  @Type(() => UpdateTodoPayloadDto)
+  payload: UpdateTodoDto;
 }

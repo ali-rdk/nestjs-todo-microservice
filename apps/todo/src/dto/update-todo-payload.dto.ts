@@ -1,13 +1,15 @@
 import { IsOptional, IsString } from 'class-validator';
 
-export class CreateTodoDto {
+export class UpdateTodoPayloadDto {
   @IsString()
-  title: string;
+  @IsOptional()
+  title?: string;
 
   @IsString()
   @IsOptional()
   description?: string;
 
   @IsString()
-  owner: string;
+  @IsOptional()
+  owner?: string;
 }

@@ -12,7 +12,9 @@ import { ITodo } from 'libs/interfaces/todo.interface';
 
 @Injectable()
 export class TodoService {
-  constructor(@InjectModel(Todo.name) private todoModel: Model<Todo>) {}
+  constructor(
+    @InjectModel(Todo.name) private readonly todoModel: Model<Todo>,
+  ) {}
 
   create(createTodoDto: CreateTodoDto) {
     try {
@@ -50,13 +52,11 @@ export class TodoService {
   }
 
   async findAll(userId: string) {
-    const todos = await this.todoModel.find({ owner: userId }).exec();
+    const todos = await this.todoModel.find({ owner: userId });
 
     if (!todos) {
       return new NotFoundException();
     }
-
-    console.log(todos);
 
     return {
       todos,
@@ -70,7 +70,7 @@ export class TodoService {
       return new NotFoundException();
     }
 
-    const deletedTodo = await this.todoModel.findByIdAndDelete(todoId).exec();
+    const deletedTodo = await this.todoModel.findByIdAndDelete(todoId);
 
     if (!deletedTodo) {
       return new NotFoundException();
@@ -89,9 +89,10 @@ export class TodoService {
     }
 
     try {
-      const updatedTodo = await this.todoModel
-        .findByIdAndUpdate(todoId, payload)
-        .exec();
+      const updatedTodo = await this.todoModel.findByIdAndUpdate(
+        todoId,
+        payload,
+      );
 
       if (!updatedTodo) {
         return new NotFoundException();
