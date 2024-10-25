@@ -1,6 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import {
+  HttpStatus,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from '../../../libs/schema/users.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -8,9 +11,6 @@ import { Model } from 'mongoose';
 @Injectable()
 export class UsersService {
   constructor(@InjectModel(User.name) private userModel: Model<User>) {}
-  findAll() {
-    return 'Hello World!';
-  }
 
   find(email) {
     return this.userModel.findOne({ email: email });
@@ -24,18 +24,13 @@ export class UsersService {
     try {
       const newUser = new this.userModel(data);
       newUser.save();
-      return true;
+      return {
+        message: 'user created',
+        status: HttpStatus.CREATED,
+      };
     } catch (error) {
       console.log(error);
-      return false;
+      return new InternalServerErrorException();
     }
-  }
-
-  update(id, payload: UpdateUserDto) {
-    return `${id}, ${payload}`;
-  }
-
-  delete(id) {
-    return id;
   }
 }

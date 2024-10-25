@@ -8,11 +8,6 @@ import { USER_CONTRACTS } from 'libs/contracts/users.contracts';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @MessagePattern({ cmd: USER_CONTRACTS.FIND_ALL })
-  findAll() {
-    return this.usersService.findAll();
-  }
-
   @MessagePattern({ cmd: USER_CONTRACTS.FIND_ONE })
   find(email) {
     return this.usersService.find(email);
@@ -21,16 +16,6 @@ export class UsersController {
   @MessagePattern({ cmd: USER_CONTRACTS.CREATE })
   create(data: CreateUserDto) {
     return this.usersService.create(data);
-  }
-
-  @MessagePattern({ cmd: USER_CONTRACTS.UPDATE })
-  update(id, payload) {
-    return this.usersService.update(id, payload);
-  }
-
-  @MessagePattern({ cmd: USER_CONTRACTS.DELETE })
-  delete(id) {
-    return this.usersService.delete(id);
   }
 
   @MessagePattern({ cmd: USER_CONTRACTS.FIND_BY_ID })
